@@ -54,7 +54,7 @@ public class WorldManager : MonoBehaviour{
 		}
 	}
 
-	private Vector3 RandomPos() {
+	public Vector3 RandomPos() {
 		Vector3 pos = new Vector3(RandomRadius(), 0, RandomRadius());
 		
 		while (Vector3.Distance(Vector3.zero, pos) >= WorldRadius()) {

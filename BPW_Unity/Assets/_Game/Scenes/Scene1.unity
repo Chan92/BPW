@@ -97,21 +97,21 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
-    agentHeight: 2
-    agentSlope: 45
-    agentClimb: 0.4
+    agentRadius: 1.4
+    agentHeight: 1.55
+    agentSlope: 44
+    agentClimb: 0.9
     ledgeDropHeight: 0
-    maxJumpAcrossDistance: 0
+    maxJumpAcrossDistance: 0.01
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.46666667
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: c0d83ecb0c8c35749a47ccea6f0412ac, type: 2}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,6 +191,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 50b8bc489d9a29c489f608275598d1ac, type: 3}
       propertyPath: m_Name
       value: wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 50b8bc489d9a29c489f608275598d1ac, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 50b8bc489d9a29c489f608275598d1ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -558,6 +562,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2045866823, guid: 9f37d9d5e9920e4458b23f5eb4b29c88, type: 3}
+      propertyPath: worldManager
+      value: 
+      objectReference: {fileID: 942055113}
+    - target: {fileID: 2045866823, guid: 9f37d9d5e9920e4458b23f5eb4b29c88, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 1385149610}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f37d9d5e9920e4458b23f5eb4b29c88, type: 3}
 --- !u!1 &942055112
@@ -629,7 +641,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &949538219
 MeshCollider:
@@ -761,6 +773,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a173385ea5883e4d89c046600073fa9, type: 3}
+--- !u!195 &1385149610 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 2045866824, guid: 9f37d9d5e9920e4458b23f5eb4b29c88,
+    type: 3}
+  m_PrefabInstance: {fileID: 928379539}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1412447271 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 50b8bc489d9a29c489f608275598d1ac,
@@ -842,6 +860,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2045866823, guid: 9f37d9d5e9920e4458b23f5eb4b29c88, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 2045866824}
+    - target: {fileID: 2045866823, guid: 9f37d9d5e9920e4458b23f5eb4b29c88, type: 3}
+      propertyPath: worldManager
+      value: 
+      objectReference: {fileID: 942055113}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f37d9d5e9920e4458b23f5eb4b29c88, type: 3}
 --- !u!1 &1653819580
@@ -858,7 +884,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1653819581
 Transform:
@@ -876,3 +902,9 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &2045866824 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 2045866824, guid: 9f37d9d5e9920e4458b23f5eb4b29c88,
+    type: 3}
+  m_PrefabInstance: {fileID: 1588062964}
+  m_PrefabAsset: {fileID: 0}
