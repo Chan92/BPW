@@ -4,22 +4,16 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyController : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
+public class EnemyController : MonoBehaviour{
+    void Start(){
         
     }
 
-    void Update()
-    {
+    void Update(){
         
     }
 
 	void Movement() {
 
 	}
-
-
 }

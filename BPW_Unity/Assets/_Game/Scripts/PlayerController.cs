@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour{
 	[Header("Movements")]
+	public Transform cam;
 	public float walkSpeed;
 	public float runSpeed;
-	public float rotateSpeed;
+	public float rotateSpeedH;
+	public float rotateSpeedV;
 
 	[Header("Attacks")]
 	public float attackSpeed;
 	public float attackDelay;
 	public float attackStrength;
 
-	void Start() {
-		
-    }
+	[Header("Other")]
+	public WorldManager worldManager;
+
+	private void Start() {
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = true;
+	}
 
 	void Update() {
 		Movement();
@@ -23,38 +29,41 @@ public class PlayerController : MonoBehaviour{
 
 	//moves the character
 	private void Movement() {
+		//Movements
 		float hor = Input.GetAxis("Horizontal");
 		float ver = Input.GetAxis("Vertical");
 		Vector3 dirMove = new Vector3(hor, 0, ver);
 
+		transform.Translate(dirMove.normalized * MoveSpeed() * Time.deltaTime, Space.Self);
+
+		//Rotations
 		float mouseHor = Input.GetAxis("Mouse X");
-		Vector3 dirRot = new Vector3(0, mouseHor, 0);
-
-		transform.root.Translate(dirMove.normalized * MoveSpeed() * Time.deltaTime, Space.Self);
-		transform.root.Rotate(dirRot.normalized * rotateSpeed);
+		float mouseVer = Input.GetAxis("Mouse Y");
 		
+		if(Mathf.Abs(mouseHor) >= Mathf.Abs(mouseVer)) {
+			Vector3 rotHor = new Vector3(0, mouseHor, 0);
+			transform.localEulerAngles += rotHor;
+		} else if(Mathf.Abs(mouseHor) < Mathf.Abs(mouseVer)) {
+			Vector3 rotVer = new Vector3(-mouseVer, 0, 0);
+			cam.localEulerAngles += rotVer;
+		} else {
+			//transform.root.rotation = Quaternion.identity;
+		}
 	}
 
-	/*
-	private void Movement() {
-		float hor = Input.GetAxis("Horizontal");
-		float ver = Input.GetAxis("Vertical");
-		Vector3 dirMove = new Vector3(0, 0, ver);
-		Vector3 dirRot = new Vector3(0, hor, 0);
-
-		transform.root.Translate(dirMove.normalized * MoveSpeed() * Time.deltaTime, Space.Self);
-		transform.root.Rotate(dirRot.normalized * rotateSpeed);
-	}*/
-
-	private void Attack() {
-		// Ray ray = camera.main.screenpointtoray(input.mouseposition);
-		//RaycastHit hit;
-		//if physycs.raycast(ray.orgin, ray direction, out hit){
-		//	}
+	//pickup items to expand the world
+	private void Pickup() {
+		//move item from map to 'hand'
+		worldManager.SpawnItem();
 	}
 
-	//toggles between running and walking speed
-	private float MoveSpeed() {
+	private void OfferItem() {
+		//remove item
+		worldManager.Expand(5);
+	}
+
+//toggles between running and walking speed
+private float MoveSpeed() {
 		if(Input.GetButton("Jump")){
 			return runSpeed;
 		} else {
