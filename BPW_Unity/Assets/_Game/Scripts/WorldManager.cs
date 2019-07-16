@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WorldManager : MonoBehaviour{
 	[Header("Flooffy")]
 	public Transform flooffyPrefab;
+	public Transform flooffyFamilly;
 	public float spawnDelay = 10;
 
 	[Header("Item")]
 	public Transform[] itemPrefab = new Transform[1];
+
+	[Header("UI")]
+	public Text flooffyCountTxt;
+	public Slider overpopSld;
 
 	[Header("Other")]
 	public Transform ground;
@@ -22,6 +28,7 @@ public class WorldManager : MonoBehaviour{
 		worldScale = ground.localScale.x + ground.localScale.z;
 		SpawnItem();
 		StartCoroutine(NewFlooffy());
+		OverpopulationUI();
 	}
 
 	void Update(){
@@ -36,6 +43,7 @@ public class WorldManager : MonoBehaviour{
 	public void Expand(float size) {
 		ground.localScale += new Vector3(size, 0, size);
 		worldScale = ground.localScale.x + ground.localScale.z;
+		OverpopulationUI();
 	}
 
 	//spawn an item which expands the world
@@ -47,11 +55,18 @@ public class WorldManager : MonoBehaviour{
 	//check for gameover and spawn flooffy 
 	void SpawnFlooffy() {
 		if (worldScale > flooffyCounter) {
-			Instantiate(flooffyPrefab, RandomPos(), Quaternion.identity);
+			Transform newFlooffy = Instantiate(flooffyPrefab, RandomPos(), Quaternion.identity);
+			newFlooffy.parent = flooffyFamilly;
 			flooffyCounter++;
+			flooffyCountTxt.text = "" + flooffyCounter + "/100";
+			OverpopulationUI();
 		} else {
 			gameover = true;
 		}
+	}
+
+	void OverpopulationUI() {
+		overpopSld.value = flooffyCounter / worldScale;
 	}
 
 	public Vector3 RandomPos() {

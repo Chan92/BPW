@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 2045866821}
   - component: {fileID: 2045866823}
   - component: {fileID: 2045866824}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bunnycopter
   m_TagString: Untagged
   m_Icon: {fileID: 0}

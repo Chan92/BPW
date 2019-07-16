@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Item
+  - Statue
+  - Flooffy
   layers:
   - Default
   - TransparentFX
@@ -14,12 +17,12 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Bunny
+  - Flooffy
+  - Ground
+  - Item
+  - Statue
   - 
   - 
   - 

@@ -17,10 +17,12 @@ public class PlayerController : MonoBehaviour{
 
 	[Header("Other")]
 	public WorldManager worldManager;
+	public Transform hand;
+	private bool hasPickup = false;
 
 	private void Start() {
-		Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible = true;
+		//Cursor.lockState = CursorLockMode.Locked;
+		//Cursor.visible = true;
 	}
 
 	void Update() {
@@ -52,8 +54,10 @@ public class PlayerController : MonoBehaviour{
 	}
 
 	//pickup items to expand the world
-	private void Pickup() {
-		//move item from map to 'hand'
+	private void Pickup(Transform item) {
+		item.parent = hand;
+		item.position = Vector3.zero;
+		hasPickup = true;
 		worldManager.SpawnItem();
 	}
 
@@ -62,12 +66,18 @@ public class PlayerController : MonoBehaviour{
 		worldManager.Expand(5);
 	}
 
-//toggles between running and walking speed
-private float MoveSpeed() {
+	//toggles between running and walking speed
+	private float MoveSpeed() {
 		if(Input.GetButton("Jump")){
 			return runSpeed;
 		} else {
 			return walkSpeed;
+		}
+	}
+
+	private void OnTriggerEnter(Collider other) {
+		if(other.tag == "Item") {
+			Pickup(other.transform);
 		}
 	}
 }
