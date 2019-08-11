@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour{
 	[Header("Movements")]
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour{
 	public float runSpeed;
 	public float rotateSpeedH;
 	public float rotateSpeedV;
+	public KeyCode runKey = KeyCode.LeftShift;	
 
 	[Header("Attacks")]
 	public float attackSpeed;
@@ -17,15 +19,16 @@ public class PlayerController : MonoBehaviour{
 
 	[Header("Other")]
 	public WorldManager worldManager;
-	public Transform hand;
+	public AudioSource soundObj;
+	public Transform hand;	
+	public AudioClip offerSound;
 	private bool hasPickup = false;
 
-	private void Start() {
-		//Cursor.lockState = CursorLockMode.Locked;
-		//Cursor.visible = true;
-	}
-
 	void Update() {
+		if(Menu.gameover) {
+			return;
+		}
+
 		Movement();
 	}
 
@@ -53,31 +56,44 @@ public class PlayerController : MonoBehaviour{
 		}
 	}
 
-	//pickup items to expand the world
-	private void Pickup(Transform item) {
+	//pickup items to give it as offering to the statue
+	public void Pickup(Transform item) {
+		Destroy(item.GetComponent<Rigidbody>());
+		Destroy(item.GetComponent<Collider>());
 		item.parent = hand;
-		item.position = Vector3.zero;
+		item.localPosition = Vector3.zero;
 		hasPickup = true;
-		worldManager.SpawnItem();
+		WorldManager.harmony = false;
+		worldManager.WorldChange();
 	}
 
-	private void OfferItem() {
-		//remove item
-		worldManager.Expand(5);
+	//offers the item to expand the world
+	//also heals the player
+	public void OfferItem() {
+		if(hand.childCount > 0) {
+			Destroy(hand.GetChild(0).gameObject);
+			WorldManager.harmony = true;
+			worldManager.Expand(worldManager.increaseSize);
+			worldManager.SpawnItem();
+			worldManager.WorldChange();
+			if (soundObj) soundObj.PlayOneShot(offerSound);
+
+			Health hp = transform.GetComponent<Health>();
+			hp.GetHeal(hp.maxHp * 0.5f);
+		}
 	}
 
 	//toggles between running and walking speed
 	private float MoveSpeed() {
-		if(Input.GetButton("Jump")){
+		if(Input.GetKey(runKey)){
 			return runSpeed;
 		} else {
 			return walkSpeed;
 		}
 	}
 
-	private void OnTriggerEnter(Collider other) {
-		if(other.tag == "Item") {
-			Pickup(other.transform);
-		}
+	//gameover
+	public void Death() {
+		worldManager.menu.OpenEndScreen(false);
 	}
 }
